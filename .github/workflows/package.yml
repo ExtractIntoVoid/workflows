@@ -1,0 +1,51 @@
+name: Publish Package
+
+on:
+    workflow_call:
+        inputs:
+            ProjName:
+                required: true
+                type: string
+            runner:
+                required: false
+                type: string
+                default: ubuntu-latest
+        secrets:
+            TOKEN:
+                required: true
+        
+jobs:
+    publish:
+        name: Publish Package
+        runs-on: ${{ inputs.runner }}
+        permissions:
+            contents: write
+            packages: write
+
+        steps:
+        - uses: actions/checkout@v5
+
+        - name: Setup .NET
+          uses: actions/setup-dotnet@v5
+          with:
+            dotnet-version: 10.0.x
+
+        - name: Add GitHub NuGet Source
+          run: dotnet nuget add source https://nuget.pkg.github.com/ExtractIntoVoid/index.json --name "github" --username "Workflow" --password ${{ secrets.TOKEN }} --store-password-in-clear-text
+
+        - name: Build
+          run: dotnet build ${{ inputs.ProjName }}/${{ inputs.ProjName }}.csproj -o Out -c:Release
+
+        - name : Upload
+          uses: actions/upload-artifact@v5
+          with:
+            name: ${{ inputs.ProjName }}
+            path: Out/${{ inputs.ProjName }}**.nupkg
+
+        - name: Release
+          uses: softprops/action-gh-release@v2.4.2
+          with:
+            files: Out/${{ inputs.ProjName }}**.nupkg
+
+        - name: Publish to GitHub Packages
+          run: dotnet nuget push Out/${{ inputs.ProjName }}**.nupkg --source "github" --api-key ${{ secrets.TOKEN }}

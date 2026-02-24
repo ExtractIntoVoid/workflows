@@ -1,0 +1,28 @@
+name: Build Solution
+
+on:
+  push:
+    paths-ignore:
+      - '.github/*'
+      - '*.md'
+      - "*.yml"
+  pull_request:
+    paths-ignore:
+      - '.github/*'
+      - '*.md'
+      - "*.yml"
+  workflow_dispatch:
+    # allow manual trigger
+
+jobs:
+  build:
+    permissions:
+      contents: read
+      packages: read
+    uses: ExtractIntoVoid/workflows/.github/workflows/build_sln.yml@main
+#    with:
+#      uploadName: RENAME_ME
+#      config: Release
+#      runner: windows-latest
+    secrets:
+      TOKEN: ${{ secrets.GITHUB_TOKEN }}

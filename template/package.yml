@@ -1,0 +1,27 @@
+name: Publish Package
+
+on:
+  push:
+    paths-ignore:
+      - '.github/*'
+      - '*.md'
+      - "*.yml"
+  pull_request:
+    paths-ignore:
+      - '.github/*'
+      - '*.md'
+      - "*.yml"
+  workflow_dispatch:
+    # allow manual trigger
+
+jobs:
+  build:
+    permissions:
+      contents: read
+      packages: read
+    uses: ExtractIntoVoid/workflows/.github/workflows/package.yml@main
+#    with:
+#      uploadName: RENAME_ME
+#      runner: windows-latest
+    secrets:
+      TOKEN: ${{ secrets.GITHUB_TOKEN }}
