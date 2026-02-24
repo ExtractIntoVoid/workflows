@@ -2,6 +2,8 @@ name: Build Project
 
 on:
   push:
+    tags-ignore:
+      - "release-*"
     paths-ignore:
       - '.github/*'
       - '*.md'
@@ -15,7 +17,7 @@ on:
     # allow manual trigger
 
 jobs:
-  build:
+  build_project:
     permissions:
       contents: read
       packages: read

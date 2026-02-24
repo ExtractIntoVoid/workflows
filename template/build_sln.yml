@@ -2,6 +2,8 @@ name: Build Solution
 
 on:
   push:
+    tags-ignore:
+      - "release-*"
     paths-ignore:
       - '.github/*'
       - '*.md'
@@ -15,7 +17,7 @@ on:
     # allow manual trigger
 
 jobs:
-  build:
+  build_sln:
     permissions:
       contents: read
       packages: read
