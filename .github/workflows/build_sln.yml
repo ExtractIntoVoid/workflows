@@ -10,6 +10,7 @@ on:
         uploadName:
             required: false
             type: string
+            default: Output
         config:
             required: false
             type: string
