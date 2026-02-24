@@ -2,23 +2,16 @@ name: Publish Package
 
 on:
   push:
-    paths-ignore:
-      - '.github/*'
-      - '*.md'
-      - "*.yml"
-  pull_request:
-    paths-ignore:
-      - '.github/*'
-      - '*.md'
-      - "*.yml"
+    tags:
+      - "release-*"
   workflow_dispatch:
     # allow manual trigger
 
 jobs:
   build:
     permissions:
-      contents: read
-      packages: read
+      contents: write
+      packages: write
     uses: ExtractIntoVoid/workflows/.github/workflows/package.yml@main
     with:
       ProjName: RENAME_ME
