@@ -20,8 +20,8 @@ jobs:
       contents: read
       packages: read
     uses: ExtractIntoVoid/workflows/.github/workflows/package.yml@main
-#    with:
-#      uploadName: RENAME_ME
+    with:
+      ProjName: RENAME_ME
 #      runner: windows-latest
     secrets:
       TOKEN: ${{ secrets.GITHUB_TOKEN }}
