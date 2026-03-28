@@ -23,7 +23,7 @@ jobs:
             packages: write
 
         steps:
-        - uses: actions/checkout@v5
+        - uses: actions/checkout@v6
 
         - name: Setup .NET
           uses: actions/setup-dotnet@v5
@@ -37,13 +37,13 @@ jobs:
           run: dotnet build ${{ inputs.ProjName }}/${{ inputs.ProjName }}.csproj -p:BaseOutputPath="../Out/" -c:Release
 
         - name : Upload
-          uses: actions/upload-artifact@v5
+          uses: actions/upload-artifact@v7
           with:
             name: ${{ inputs.ProjName }}
             path: Out/Release/${{ inputs.ProjName }}**.nupkg
 
         - name: Release
-          uses: softprops/action-gh-release@v2.4.2
+          uses: softprops/action-gh-release@v2
           with:
             files: Out/Release/${{ inputs.ProjName }}**.nupkg
 
